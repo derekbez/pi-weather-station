@@ -4,9 +4,9 @@ import time
 import statistics
 import bme280
 import smbus2
-import ds18b20_therm
+import ds18b20_therm  # part of the RaspberryPiFoundation code
 import database
-import wind_direction_byo
+import wind_direction
 
 CM_IN_A_KM = 100000.0
 SECS_IN_AN_HOUR = 3600
