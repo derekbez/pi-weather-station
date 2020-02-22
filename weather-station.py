@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#! /usr/bin/env python3
 
 from gpiozero import Button
 import math
@@ -8,8 +8,8 @@ import statistics
 import bme280
 import smbus2
 import ds18b20_therm  # part of the RaspberryPiFoundation code
-import database
-import wind_direction
+import database       #
+import wind_direction  # module
 
 CM_IN_A_KM = 100000.0
 SECS_IN_AN_HOUR = 3600
@@ -17,9 +17,10 @@ ADJUSTMENT = 1.18
 BUCKET_SIZE = 0.2794
 
 interval = 120
+wind_interval = 60
+
 wind_count = 0
 radius_cm = 9.0
-wind_interval = 60
 store_speeds = []
 store_directions = []
 rain_count = 0
