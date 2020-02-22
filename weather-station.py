@@ -1,6 +1,9 @@
+#!/usr/bin/env python3
+
 from gpiozero import Button
 import math
 import time
+import datetime
 import statistics
 import bme280
 import smbus2
@@ -13,7 +16,7 @@ SECS_IN_AN_HOUR = 3600
 ADJUSTMENT = 1.18
 BUCKET_SIZE = 0.2794
 
-interval = 300
+interval = 120
 wind_count = 0
 radius_cm = 9.0
 wind_interval = 60
@@ -85,7 +88,7 @@ while True:
         reset_wind()
         #time.sleep(wind_interval)
         while time.time() - wind_start_time <= wind_interval:
-            store_directions.append(wind_direction.get_value())
+            store_directions.append(wind_direction.get_value( int(wind_interval / 10 )))
 
         final_speed = calculate_speed(wind_interval)
         store_speeds.append(final_speed)
@@ -99,9 +102,10 @@ while True:
     humidity, pressure, ambient_temp = read_bme280()
     ground_temp = temp_probe.read_temp()
 
-    print(wind_speed, wind_gust, rainfall, wind_average, humidity, pressure, ambient_temp, ground_temp)
+    #print(wind_speed, wind_gust, rainfall, wind_average, humidity, pressure, ambient_temp, ground_temp)
+    print(ambient_temp, ground_temp, 0, pressure, humidity, wind_average, wind_speed, wind_gust, rainfall, datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
 
-    db.insert(ambient_temp, ground_temp, 0, pressure, humidity, wind_average, wind_speed, wind_gust, rainfall)
+    db.insert(ambient_temp, ground_temp, 0, pressure, humidity, wind_average, wind_speed, wind_gust, rainfall, datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
 
     store_speeds = []
     store_directions = []
