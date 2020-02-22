@@ -3,12 +3,15 @@ Raspberry Pi Weather Station
 This is based on the Raspberry Pi Foundation weather station, as found here:
 https://projects.raspberrypi.org/en/projects/build-your-own-weather-station/1
 
-
+##########
 PRE-REQS:
+
+git clone https://github.com/derekbez/pi-weather-station.git
 
 sudo raspi-config
 Interfacing Options:
 SSH
+SPI
 I2C
 1-Wire
 
@@ -29,7 +32,49 @@ Install the MariaDB database server software:
 sudo apt-get install -y mariadb-server mariadb-client libmariadbclient-dev
 sudo pip3 install mysqlclient
 
+##########
+(INSTALLING IN A VIRTUAL ENVIRONMENT):
 
+python -m venv d:\dev\pi-weather-station
+
+.\scripts\activate
+
+python --version
+
+copy requirements.txt 
+   (pip freeze > requirements.txt)
+   
+python -m pip install --upgrade pip
+
+
+##########
+(RUN ON BOOT):
+https://www.dexterindustries.com/howto/run-a-program-on-your-raspberry-pi-at-startup/
+
+sudo nano /lib/systemd/system/weather.service
+add this:
+---
+[Unit]
+Description=Weather Station Service
+After=multi-user.target
+
+[Service]
+Type=idle
+ExecStart=/usr/bin/python3 /home/pi/pi-weather-station/weather-station.py
+
+[Install]
+WantedBy=multi-user.target
+--- 
+ 
+sudo chmod 644 /lib/systemd/system/weather.service 
+sudo systemctl daemon-reload
+sudo systemctl enable weather.service 
+sudo reboot
+
+Check if running:
+ps aux | grep weather-station
+
+##########
 SENSORS:
 
 BME280 Temperature, Pressue and Humidity sensor
@@ -47,7 +92,7 @@ Uses code from the RPi GitHub repository for this project (ds18b20_therm.py).  H
 Wind Speed, Wind Direction and Rainfall
 Code implemented, but no sensors connected.
 
- 
+########## 
 DATABASE:
 
 sudo mysql
@@ -81,9 +126,10 @@ home/pi/weather-station/credentials.mysql
 
 
 select count(*) from WEATHER_MEASUREMENT;
+select * from WEATHER_MEASUREMENT order by CREATED desc limit 25;
 
 
-
+##########
 
 https://help.github.com/en/github/importing-your-projects-to-github/adding-an-existing-project-to-github-using-the-command-line
 
