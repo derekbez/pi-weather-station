@@ -1,12 +1,12 @@
 #! /usr/bin/env python3
 
-from gpiozero import Button
 import math
 import time
 import datetime
 import statistics
 import bme280
 import smbus2
+from gpiozero import Button
 import ds18b20_therm  # part of the RaspberryPiFoundation code
 import database       #
 import wind_direction  # module
@@ -16,7 +16,7 @@ SECS_IN_AN_HOUR = 3600
 ADJUSTMENT = 1.18
 BUCKET_SIZE = 0.2794
 
-interval = 120
+interval = 300
 wind_interval = 60
 
 wind_count = 0
