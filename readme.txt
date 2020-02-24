@@ -6,6 +6,20 @@ https://projects.raspberrypi.org/en/projects/build-your-own-weather-station/1
 ##########
 PRE-REQS:
 
+Noobs
+Raspbian 
+Lite - no GUI is best
+
+sudo apt update
+sudo apt full-upgrade
+
+change password 
+passwd
+
+(Install git and pip):
+sudo apt-get install git
+sudo apt install python3-pip
+
 git clone https://github.com/derekbez/pi-weather-station.git
 
 sudo raspi-config
@@ -15,8 +29,12 @@ SPI
 I2C
 1-Wire
 
+Boot Options > Desktop / CLI > Console Autologin
+
 Install the BME280 Python library for the temperature, pressure, humidity sensor:
 sudo pip3 install RPi.bme280
+
+sudo apt install python3-gpiozero
 
 For the DS18B20 thermal probe sensor:
 sudo nano /boot/config.txt
@@ -32,19 +50,21 @@ Install the MariaDB database server software:
 sudo apt-get install -y mariadb-server mariadb-client libmariadbclient-dev
 sudo pip3 install mysqlclient
 
+
+
 ##########
 (INSTALLING IN A VIRTUAL ENVIRONMENT):
 
-python -m venv d:\dev\pi-weather-station
+python3 -m venv d:\dev\pi-weather-station
 
 .\scripts\activate
 
-python --version
+python3 --version
 
 copy requirements.txt 
    (pip freeze > requirements.txt)
    
-python -m pip install --upgrade pip
+python3 -m pip install --upgrade pip
 
 
 ##########
@@ -132,7 +152,6 @@ select * from WEATHER_MEASUREMENT order by CREATED desc limit 25;
 ##########
 
 https://help.github.com/en/github/importing-your-projects-to-github/adding-an-existing-project-to-github-using-the-command-line
-
 
 
 
